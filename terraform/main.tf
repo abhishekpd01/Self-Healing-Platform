@@ -126,7 +126,7 @@ resource "google_compute_firewall" "jenkins" {
     ports    = ["8080"]
   }
 
-  source_ranges = ["10.160.0.3/32"]
+  source_ranges = ["0.0.0.0/0"]
 
   target_tags = ["jenkins-server"]
 }
