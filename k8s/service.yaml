@@ -5,6 +5,9 @@ kind: Service
 metadata:
   name: employee-api
 
+  labels:
+    app: employee-api
+
 spec:
   type: LoadBalancer
 
@@ -12,6 +15,7 @@ spec:
     app: employee-api
 
   ports:
-    - protocol: TCP
-      port: 80
+    - name: metrics
+      protocol: TCP
+      port: 3000
       targetPort: 3000
