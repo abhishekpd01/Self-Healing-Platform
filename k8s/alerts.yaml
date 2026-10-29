@@ -1,0 +1,33 @@
+
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  name: employee-api-alerts
+  namespace: monitoring
+
+  labels:
+    release: monitoring
+
+spec:
+  groups:
+    - name: employee-api
+      rules:
+
+        - alert: HighApplicationErrorRate
+
+          expr: |
+            (
+              sum(rate(http_requests_total{status=~"5.."}[5m]))
+              /
+              sum(rate(http_requests_total[5m]))
+            ) > 0.05
+
+          for: 2m
+
+          labels:
+            severity: warning
+
+          annotations:
+            summary: "Employee API error rate is high"
+            description: "More than 5% of API requests are returning server errors."
